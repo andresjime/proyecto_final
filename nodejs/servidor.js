@@ -1,7 +1,7 @@
 //console.log("Hola mundo desde node js")
 const express = require('express');
 const mongoose = require('mongoose');
-const tareaSchema = require("./modelos/tarea.js");
+const tareaSchema = require("./modelos/inscripcion.js");
 
 const app = express();
 const router = express.Router();
@@ -17,27 +17,36 @@ router.get('/', (req, res) =>{
     res.send("Mi primera api")
 })
 
-router.get('/tarea', (req, res) =>{
+router.get('/inscripcion', (req, res) =>{
     tareaSchema.find(function(err, datos){
         if(err){
-            console.log("erroe leyendo tareas");
+            console.log("error leyendo estudiante");
         }else{
             res.send(datos);
         }
     })
 });
 
-router.post('/tarea', (req, res) => {
-    let nuevaTarea = new tareaSchema({
-        idTarea: req.body.id,
-        nombreTarea: req.body.nombre,
-        detalleTarea: req.body.detalle
+router.post('/inscripcion', (req, res) => {
+    let nuevaInscripcion = new tareaSchema({
+        estudianteId: req.body.id,
+        tipoDocumento:req.body.tipo,
+        documentoId: req.body.documento, 
+        nombres: req.body.nombre,
+        apellidos: req.body.apellidos,
+        direccion: req.body.direccion,
+        correo: req.body.correo,
+        fijo: req.body.fijo,
+        codigoIcfes: req.body.icfes,
+        familiar: req.body.familiar,
+        estrato: req.body.estrato,
+        tipoColegio: req.body.tipoColegio
     });
-     nuevaTarea.save(function(err, datos){
+     nuevaInscripcion.save(function(err, datos){
         if(err){
             console.log(err);
         }
-        res.send("tareal almacenada correctamente")
+        res.send("Incripcion almacenada correctamente")
      })
 })
 
