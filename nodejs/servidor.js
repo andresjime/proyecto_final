@@ -14,7 +14,7 @@ app.use(express.json());
 mongoose.connect("mongodb+srv://andresj:12345@clusterejemplog39.3axo90w.mongodb.net/ActividadesBD?retryWrites=true&w=majority");
 //operaciones cruud
 router.get('/', (req, res) =>{
-    res.send("el inicio de mi api")
+    res.send("Mi primera api")
 })
 
 router.get('/tarea', (req, res) =>{
