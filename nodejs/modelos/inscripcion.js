@@ -18,4 +18,4 @@ let tareaSchema = new mongoose.Schema({
     detalleTarea: String
 });
 
-module.exports = mongoose.model('inscripcion', tareaSchema, 'inscripciones');
+module.exports = mongoose.model('inscripcion', inscripcionSchema, 'inscripciones');

@@ -11,14 +11,14 @@ app.use(express.json());
 
 
 //Conexion a base de datos
-mongoose.connect("mongodb+srv://andresj:12345@clusterejemplog39.3axo90w.mongodb.net/ActividadesBD?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://andresj:12345@clusterejemplog39.3axo90w.mongodb.net/InscripcionBD?retryWrites=true&w=majority");
 //operaciones cruud
 router.get('/', (req, res) =>{
     res.send("Mi primera api")
 })
 
 router.get('/inscripcion', (req, res) =>{
-    tareaSchema.find(function(err, datos){
+    inscripcionSchema.find(function(err, datos){
         if(err){
             console.log("error leyendo estudiante");
         }else{
@@ -28,7 +28,7 @@ router.get('/inscripcion', (req, res) =>{
 });
 
 router.post('/inscripcion', (req, res) => {
-    let nuevaInscripcion = new tareaSchema({
+    let nuevaInscripcion = new inscripcionSchema({
         estudianteId: req.body.id,
         tipoDocumento:req.body.tipo,
         documentoId: req.body.documento, 
