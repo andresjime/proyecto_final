@@ -1,7 +1,7 @@
 //console.log("Hola mundo desde node js")
 const express = require('express');
 const mongoose = require('mongoose');
-const tareaSchema = require("./modelos/inscripcion.js");
+const inscripcionSchema = require("./modelos/inscripcion.js");
 
 const app = express();
 const router = express.Router();
@@ -29,15 +29,15 @@ router.get('/inscripcion', (req, res) =>{
 
 router.post('/inscripcion', (req, res) => {
     let nuevaInscripcion = new inscripcionSchema({
-        estudianteId: req.body.id,
-        tipoDocumento:req.body.tipo,
-        documentoId: req.body.documento, 
-        nombres: req.body.nombre,
+        estudianteId: req.body.estudianteId,
+        tipoDocumento:req.body.tipoDocumento,
+        documentoId: req.body.documentoId, 
+        nombres: req.body.nombres,
         apellidos: req.body.apellidos,
         direccion: req.body.direccion,
         correo: req.body.correo,
         fijo: req.body.fijo,
-        codigoIcfes: req.body.icfes,
+        codigoIcfes: req.body.codigoIcfes,
         familiar: req.body.familiar,
         estrato: req.body.estrato,
         tipoColegio: req.body.tipoColegio

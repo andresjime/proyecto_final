@@ -1,21 +1,18 @@
 const mongoose = require('mongoose');
 
-let tareaSchema = new mongoose.Schema({
+let inscripcionSchema = new mongoose.Schema({
     estudianteId: Number,
     tipoDocumento: String,
     documentoId: String,
-    Nombres: String,
-    Apellidos: String,
+    nombres: String,
+    apellidos: String,
     direccion: String,
     Correo: String,
     fijo: String,
     codigoIcfes: String,
-    familiar: Boolean,
+    familiar: String,
     estrato: Number,
-    tipoColegio: String,
-    idTarea: Number,
-    nombreTarea: String,
-    detalleTarea: String
+    tipoColegio: String
 });
 
 module.exports = mongoose.model('inscripcion', inscripcionSchema, 'inscripciones');
