@@ -1,4 +1,5 @@
 //console.log("Hola mundo desde node js")
+const { request } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
 const inscripcionSchema = require("./modelos/inscripcion.js");
@@ -50,6 +51,50 @@ router.post('/inscripcion', (req, res) => {
      })
 })
 
+router.put('/inscripcion', (req, res) =>{
+    inscripcionSchema.updateOne({estudianteId:req.body.estudianteId},{
+        $set: {
+        tipoDocumento:req.body.tipoDocumento,
+        documentoId: req.body.documentoId, 
+        nombres: req.body.nombres,
+        apellidos: req.body.apellidos,
+        direccion: req.body.direccion,
+        correo: req.body.correo,
+        fijo: req.body.fijo,
+        codigoIcfes: req.body.codigoIcfes,
+        familiar: req.body.familiar,
+        estrato: req.body.estrato,
+        tipoColegio: req.body.tipoColegio
+        }
+    },
+    function(err,datos){
+        if(err){
+            res.json({
+                resultado: 'no se pudo actualizar la incripcion',
+                err
+            });
+        }else{
+            res.send('La informacion fue actualizada correctamente')
+        }
+    })
+})
+
+// eliminar
+router.delete('/inscripcion', (req, res) =>{
+    inscripcionSchema.deleteOne({estudianteId:req.body.estudianteId},{
+        $set: req.body
+    },
+    function(err,datos){
+        if(err){
+            res.json({
+                resultado: 'no se pudo actualizar la incripcion',
+                err
+            });
+        }else{
+            res.send('La informacion fue eliminada correctamente')
+        }
+    })
+})
 app.use(router);
 app.listen(3000, () => {
     console.log('servidor corriendo en puerto 3000')
