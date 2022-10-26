@@ -1,14 +1,16 @@
 {
   "name": "crud-node",
   "version": "1.0.0",
-  "description": "mi primera api",
+  "description": "Propiedad Horizontal",
   "main": "servidor.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andres jimenez 2022",
   "license": "ISC",
   "dependencies": {
+    "cross-fetch": "^3.1.5",
     "express": "^4.18.2",
     "mongoose": "^6.6.5"
   }

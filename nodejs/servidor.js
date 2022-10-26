@@ -1,8 +1,11 @@
 //console.log("Hola mundo desde node js")
+//import fetch from "node-fetch";
+import fetch from 'cross-fetch';
 const { request } = require('express');
 const express = require('express');
 const mongoose = require('mongoose');
-const inscripcionSchema = require("./modelos/inscripcion.js");
+const rolSchema = require("./modelos/rol.js");
+const usuarioSchema = require("./modelos/usuario.js");
 
 const app = express();
 const router = express.Router();
@@ -10,67 +13,50 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 
-
 //Conexion a base de datos
-mongoose.connect("mongodb+srv://andresj:12345@clusterejemplog39.3axo90w.mongodb.net/InscripcionBD?retryWrites=true&w=majority");
-//operaciones cruud
+mongoose.connect("mongodb+srv://andresj:12345@clusterejemplog39.3axo90w.mongodb.net/Propiedad_Horizontal_BD?retryWrites=true&w=majority");
+
+
+//operaciones crud Rol
 router.get('/', (req, res) =>{
-    res.send("Mi primera api")
+    res.send("hola mundo")
 })
 
-router.get('/inscripcion', (req, res) =>{
-    inscripcionSchema.find(function(err, datos){
+router.get('/ingreso-rol', (req, res) =>{
+    rolSchema.find(function(err, datos){
         if(err){
-            console.log("error leyendo estudiante");
+            console.log("error leyendo Rol");
         }else{
             res.send(datos);
         }
     })
 });
 
-router.post('/inscripcion', (req, res) => {
-    let nuevaInscripcion = new inscripcionSchema({
-        estudianteId: req.body.estudianteId,
-        tipoDocumento:req.body.tipoDocumento,
-        documentoId: req.body.documentoId, 
-        nombres: req.body.nombres,
-        apellidos: req.body.apellidos,
-        direccion: req.body.direccion,
-        correo: req.body.correo,
-        fijo: req.body.fijo,
-        codigoIcfes: req.body.codigoIcfes,
-        familiar: req.body.familiar,
-        estrato: req.body.estrato,
-        tipoColegio: req.body.tipoColegio
+router.post('/ingreso-rol', (req, res) => {
+    let nuevoRol = new rolSchema({
+        rolId: req.body.rolId,
+        rol_nombre: req.body.nombreRol,
+        descripcion: req.body.descripcion
     });
-     nuevaInscripcion.save(function(err, datos){
+     nuevoRol.save(function(err, datos){
         if(err){
             console.log(err);
         }
-        res.send("Incripcion almacenada correctamente")
+        res.send("se guarado automaticamente")
      })
 })
 
-router.put('/inscripcion', (req, res) =>{
-    inscripcionSchema.updateOne({estudianteId:req.body.estudianteId},{
+router.put('/ingreso-rol', (req, res) =>{
+    rolSchema.updateOne({rolId:req.body.rolId},{
         $set: {
-        tipoDocumento:req.body.tipoDocumento,
-        documentoId: req.body.documentoId, 
-        nombres: req.body.nombres,
-        apellidos: req.body.apellidos,
-        direccion: req.body.direccion,
-        correo: req.body.correo,
-        fijo: req.body.fijo,
-        codigoIcfes: req.body.codigoIcfes,
-        familiar: req.body.familiar,
-        estrato: req.body.estrato,
-        tipoColegio: req.body.tipoColegio
+            rol_nombre: req.body.nombreRol,
+            descripcion: req.body.descripcion
         }
     },
     function(err,datos){
         if(err){
             res.json({
-                resultado: 'no se pudo actualizar la incripcion',
+                resultado: 'no se pudo actualizar el nombre del Rol',
                 err
             });
         }else{
@@ -80,14 +66,14 @@ router.put('/inscripcion', (req, res) =>{
 })
 
 // eliminar
-router.delete('/inscripcion', (req, res) =>{
-    inscripcionSchema.deleteOne({estudianteId:req.body.estudianteId},{
+router.delete('/ingreso-rol', (req, res) =>{
+    rolSchema.deleteOne({rolId:req.body.rolId},{
         $set: req.body
     },
     function(err,datos){
         if(err){
             res.json({
-                resultado: 'no se pudo actualizar la incripcion',
+                resultado: 'no se pudo eliminar el rol',
                 err
             });
         }else{
@@ -95,7 +81,87 @@ router.delete('/inscripcion', (req, res) =>{
         }
     })
 })
+
+
+// CRUD para el usuario
+
+router.get('/ingreso-usuario', (req, res) =>{
+    usuarioSchema.find(function(err, datos){
+        if(err){
+            console.log("error leyendo usuario");
+        }else{
+            res.send(datos);
+        }
+    })
+});
+
+router.post('/ingreso-usuario', (req, res) => {
+    let nuevoUsuario = new usuarioSchema({
+        usuarioId:req.body.usuarioId,
+        primer_nombre: req.body.primerNombre,
+        segundo_nombre: req.body.segundoNombre,
+        primer_apellido: req.body.primerApellido,
+        segundo_apellido: req.body.SegundoApellido,
+        documento_id: req.body.numeroDocumento,
+        rol_nombre: req.body.idRol,
+        correo: req.body.correo,
+        celular: req.body.celular,
+        clave: req.body.clave
+    });
+    nuevoUsuario.save(function(err, datos){
+        if(err){
+            console.log(err);
+        }
+        res.send("Ingreso de nuevo usuario almacenado correctamente")
+     })
+})
+
+router.put('/ingreso-usuario', (req, res) =>{
+    usuarioSchema.updateOne({usuarioId:req.body.usuarioId},{
+        $set: {
+            primer_nombre: req.body.primerNombre,
+            segundo_nombre: req.body.segundoNombre,
+            primer_apellido: req.body.primerApellido,
+            segundo_apellido: req.body.SegundoApellido,
+            documento_id: req.body.numeroDocumento,
+            rol_nombre: req.body.idRol,
+            correo: req.body.correo,
+            celular: req.body.celular,
+            clave: req.body.clave
+        }
+    },
+    function(err,datos){
+        if(err){
+            res.json({
+                resultado: 'no se pudo actualizar los datos del usuario',
+                err
+            });
+        }else{
+            res.send('La informacion fue actualizada correctamente')
+        }
+    })
+})
+
+// eliminar
+router.delete('/ingreso-usuario', (req, res) =>{
+    usuarioSchema.deleteOne({usuarioId:req.body.usuarioId},{
+        $set: req.body
+    },
+    function(err,datos){
+        if(err){
+            res.json({
+                resultado: 'no se pudo eliminar el usuario',
+                err
+            });
+        }else{
+            res.send('La informacion fue eliminada correctamente')
+        }
+    })
+})
+
 app.use(router);
 app.listen(3000, () => {
     console.log('servidor corriendo en puerto 3000')
 })
+
+
